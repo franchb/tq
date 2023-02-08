@@ -1,10 +1,3 @@
-# tq
-Command-line TOML processor
-
-Inspired by [tombl](https://github.com/snyball/tombl), but returns a shell-escaped output. Could be useful for various DevOps automation tasks.
-
-
-```shell
 USAGE:
     tombl [OPTIONS] [PATTERN]
 
@@ -31,4 +24,4 @@ EXAMPLES:
 
     $ cat Cargo.toml | tq profile.target.debug
     1
-```
+

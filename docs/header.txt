@@ -1,0 +1,4 @@
+tq is a tool for processing TOML inputs, applying the given filter to
+its TOML text inputs and producing the filter's results as text on
+standard output.
+
