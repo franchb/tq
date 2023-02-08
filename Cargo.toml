@@ -1,0 +1,33 @@
+[package]
+name = "tq"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.67.0"
+license = "GPL-3.0-only"
+description = "Command-line TOML processor"
+homepage = "https://github.com/franchb/tq"
+repository = "https://github.com/franchb/tq"
+authors = ["Eliah Rusin <hello@franchb.com>"]
+
+[[bin]]
+name = "tq"
+path = "src/main.rs"
+
+[profile.release]
+debug = 0
+strip = true
+incremental = false
+panic = "abort"
+lto = "fat"
+codegen-units = 1
+opt-level = "s"
+
+[dependencies]
+snailquote = "0.3.1"
+thiserror = "1.0.32"
+toml = "0.7.1"
+
+[dev-dependencies.cargo-husky]
+version = "1"
+default-features = false
+features = ["precommit-hook", "user-hooks"]
