@@ -6,7 +6,7 @@ Inspired by [tombl](https://github.com/snyball/tombl), but returns a shell-escap
 
 ```shell
 USAGE:
-    tombl [OPTIONS] [PATTERN]
+    tq [OPTIONS] [PATTERN]
 
 ARGS:
     <PATTERN>
