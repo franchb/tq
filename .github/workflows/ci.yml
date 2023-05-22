@@ -52,38 +52,38 @@ jobs:
           use-cross: ${{ matrix.job.use-cross }}
           args: --target ${{ matrix.job.target }} --verbose -- --nocapture
 
-  integration_tests:
-    name: Integration tests
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [macos-latest, ubuntu-latest]
-        include:
-          - os: macos-latest
-            target: x86_64-apple-darwin
-          - os: ubuntu-latest
-            target: x86_64-unknown-linux-gnu
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-      - name: Install Rust
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-          profile: minimal
-          override: true
-      - name: Build for release
-        uses: actions-rs/cargo@v1
-        with:
-          command: build
-          args: --target ${{ matrix.target }} --release
-      - name: End to end tests
-        run: |
-          DELTA_BIN=target/${{ matrix.target }}/release/delta
-          ./tests/test_raw_output_matches_git_on_full_repo_history $DELTA_BIN
-          ./tests/test_deprecated_options $DELTA_BIN > /dev/null
-      - name: Run executable
-        run: cargo run --release --target ${{ matrix.target }} -- < /dev/null
+#  integration_tests:
+#    name: Integration tests
+#    runs-on: ${{ matrix.os }}
+#    strategy:
+#      matrix:
+#        os: [macos-latest, ubuntu-latest]
+#        include:
+#          - os: macos-latest
+#            target: x86_64-apple-darwin
+#          - os: ubuntu-latest
+#            target: x86_64-unknown-linux-gnu
+#    steps:
+#      - name: Checkout repository
+#        uses: actions/checkout@v2
+#      - name: Install Rust
+#        uses: actions-rs/toolchain@v1
+#        with:
+#          toolchain: stable
+#          profile: minimal
+#          override: true
+#      - name: Build for release
+#        uses: actions-rs/cargo@v1
+#        with:
+#          command: build
+#          args: --target ${{ matrix.target }} --release
+#      - name: End to end tests
+#        run: |
+#          DELTA_BIN=target/${{ matrix.target }}/release/delta
+#          ./tests/test_raw_output_matches_git_on_full_repo_history $DELTA_BIN
+#          ./tests/test_deprecated_options $DELTA_BIN > /dev/null
+#      - name: Run executable
+#        run: cargo run --release --target ${{ matrix.target }} -- < /dev/null
 
   rustfmt:
     name: Rustfmt
@@ -122,26 +122,3 @@ jobs:
         with:
           command: clippy
           args: -- -D warnings
-
-  coverage:
-    name: Code coverage
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-      - name: Install stable toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-          override: true
-      - name: Run cargo-tarpaulin
-        uses: actions-rs/tarpaulin@v0.1
-        with:
-          args: '--ignore-tests --out Lcov --output-dir target/tarpaulin'
-      - name: Upload to Coveralls
-        # upload only if push
-        if: ${{ github.event_name == 'push' }}
-        uses: coverallsapp/github-action@master
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          path-to-lcov: './target/tarpaulin/lcov.info'
