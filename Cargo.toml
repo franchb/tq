@@ -9,6 +9,7 @@ homepage = "https://github.com/franchb/tq"
 repository = "https://github.com/franchb/tq"
 authors = ["Eliah Rusin <hello@franchb.com>"]
 
+
 [[bin]]
 name = "tq"
 path = "src/main.rs"
