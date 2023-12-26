@@ -24,7 +24,7 @@ opt-level = "s"
 
 [dependencies]
 snailquote = "0.3.1"
-thiserror = "1.0.50"
+thiserror = "1.0.52"
 toml = "0.8.8"
 
 [dev-dependencies.cargo-husky]
